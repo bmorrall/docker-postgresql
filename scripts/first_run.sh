@@ -25,7 +25,7 @@ pre_start_action() {
 post_start_action() {
   echo "Creating the superuser: $USER"
 
-  setuser postgres psql -q <<-EOF
+  su postgres -c "psql -q" <<-EOF
     DROP ROLE IF EXISTS $USER;
     CREATE ROLE $USER WITH ENCRYPTED PASSWORD '$PASS';
     ALTER USER $USER WITH ENCRYPTED PASSWORD '$PASS';
@@ -37,7 +37,7 @@ EOF
   if [ $(env | grep DB) ]; then
     echo "Creating database: $DB"
     for db in ${DB//,/ }; do
-      setuser postgres psql -q <<-EOF
+      su postgres -c "psql -q" <<-EOF
       CREATE DATABASE $db WITH OWNER=$USER ENCODING='UTF8';
       GRANT ALL ON DATABASE $db TO $USER
 EOF
