@@ -23,7 +23,7 @@ run: clean
 
 bash: clean
 	mkdir -p $(DATA_DIR)
-	docker run -t -i $(DOCKER_RUN_COMMON) /sbin/my_init -- bash -l
+	docker run -t -i $(DOCKER_RUN_COMMON) /scripts/start.sh -- bash -l
 
 # Removes existing containers.
 clean:
